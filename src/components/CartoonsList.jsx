@@ -1,34 +1,74 @@
-import React, { useState } from 'react';
+import {React,useState} from 'react';
+import '../styles.css'
 import CartoonInfo from './CartoonInfo';
 
-export default function CartoonsList() {
-  const initalList = [
-    'The Last Airbender',
-    'Ben 10',
-    'Hey Arnold',
-    'Phineas and Ferb',
+const cartoons =
+  [
+    {
+      cartoonName: 'avatar the l ast airbender ', discreption: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+ sed do eiusmod tempor incididunt ut labore 
+ et dolore magna aliqua` },
+    {
+      cartoonName: 'generator rex ', discreption: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+ sed do eiusmod tempor incididunt ut labore 
+ et dolore magna aliqua` },
+    {
+      cartoonName: 'ben 10 ', discreption: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+ sed do eiusmod tempor incididunt ut labore 
+ et dolore magna aliqua` }, {
+      cartoonName: 'x men ', discreption: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+ sed do eiusmod tempor incididunt ut labore 
+ et dolore magna aliqua` }, {
+      cartoonName: 'disenchantment ', discreption: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+ sed do eiusmod tempor incididunt ut labore 
+ et dolore magna aliqua` }, {
+      cartoonName: 'rick and morty ', discreption: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+ sed do eiusmod tempor incididunt ut labore 
+ et dolore magna aliqua` },
+    {
+      cartoonName: 'miraculous lady bug', discreption: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+ sed do eiusmod tempor incididunt ut labore 
+ et dolore magna aliqua` },
+    {
+      cartoonName: 'regular show ', discreption: `Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+ sed do eiusmod tempor incididunt ut labore 
+ et dolore magna aliqua` },
+
   ];
-  const [cartoons, setCartoons] = useState(initalList);
-  const [cartoon, setCartoon] = useState('');
-
-  const searchCartoon = (e) => {
-    const searchTerm = e.target.value;
-    setCartoon(searchTerm);
-    const filtered = initalList.filter((cartoon) =>
-      cartoon.toLowerCase().includes(searchTerm.toLowerCase())
+  function CartoonsList() {
+    const [searchInput, setSearchInput] = useState(""); 
+  
+    const handleSearchChange = (e) => {
+      setSearchInput(e.target.value);
+    };
+  
+    const filteredCartoons = searchInput.length > 0
+      ? cartoons.filter((cartoon) =>
+          cartoon.cartoonName.toLowerCase().includes(searchInput.toLowerCase())
+        )
+      : 'no such name';
+  
+    return (
+      <div className="cartoonsList">
+        <h1>My top 10 Cartoons of all time</h1>
+        <div>
+          <input className='search'
+            type="text"
+            placeholder="Search here"
+            onChange={handleSearchChange}
+            value={searchInput}
+          />
+          <div className="restaurant-list">
+            {filteredCartoons.map((cartoon) => (
+              <CartoonInfo
+                key={cartoon.cartoonName}
+                cartoonName={cartoon.cartoonName}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
     );
-
-    setCartoons(filtered);
-  };
-  return (
-    <>
-      <h1>My Cartoon List</h1>
-      <input name='cartoon' value={cartoon} onChange={searchCartoon} />
-      {cartoons.length > 0
-        ? cartoons.map((cartoon, index) => (
-            <CartoonInfo key={index} cartoon={cartoon} />
-          ))
-        : 'No Cartoon found'}
-    </>
-  );
-}
+  }
+  
+  export default CartoonsList;
