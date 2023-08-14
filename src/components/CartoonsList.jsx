@@ -46,7 +46,7 @@ const cartoons =
       ? cartoons.filter((cartoon) =>
           cartoon.cartoonName.toLowerCase().includes(searchInput.toLowerCase())
         )
-      : 'no such name';
+      : cartoons;
   
     return (
       <div className="cartoonsList">
